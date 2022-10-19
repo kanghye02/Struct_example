@@ -1,0 +1,57 @@
+#include<iostream>
+#include<string>
+using namespace std;
+struct TIENDIEN{
+	string ten;
+	long st, d[50],td[50];
+	float tb;
+};
+int main()
+{
+	TIENDIEN y[100], tg;
+	int n,i,j;
+	cout<<"Nhap so ho gia dinh: "; cin>>n;
+	for(i=1;i<=n;i++)
+	{
+		cout<<"Nhap thong tin gia dinh thu "<<i<<endl;
+		cin.ignore();
+		cout<<"Nhap ten: ";
+		getline(cin,y[i].ten);
+		fflush(stdin);
+		cout<<"Nhap so thang: ";
+		cin>>y[i].st;
+		y[i].tb=0;
+		for(j=1;j<=y[i].st;j++)
+		{
+			cout<<"Nhap so dien thang "<<j<<": ";
+			cin>>y[i].d[j];
+			y[i].td[j]=0;
+			if(y[i].d[j]<=50) 
+				y[i].td[j]=y[i].d[j]*1000;
+			else if(y[i].d[j]<=150)
+				y[i].td[j]=50*1000+(y[i].d[j]-50)*1500;
+			else
+				y[i].td[j]=50*1000+100*1500+(y[i].d[j]-150)*2000;
+			y[i].tb=y[i].tb+y[i].td[j];
+		}
+		y[i].tb=y[i].tb/y[i].st;
+	}
+	for(i=1;i<n;i++)
+	{
+		for(j=1;j<n-i;j++)
+		{
+			if(y[j].tb<y[j+1].tb)
+			{
+				tg=y[i];
+				y[i]=y[j];
+				y[j]=tg;
+			}
+		}
+	}
+	cout<<"sau khi sap xep: "<<endl;
+	for(i=1;i<=n;i++)
+	{
+		if(y[i].st<=12)
+			cout<<y[i].ten<<" "<<y[i].tb<<endl;
+	}
+}
